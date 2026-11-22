@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/phonepe/pnintent.php"
+  to = "/.netlify/functions/pnintent"
+  status = 200
+
+[[redirects]]
+  from = "/api/pnintent"
+  to = "/.netlify/functions/pnintent"
+  status = 200

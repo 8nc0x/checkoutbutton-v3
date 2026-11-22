@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting to PhonePe...</title>
+  <style>
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+    }
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top-color: #5f259f;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .btn {
+      margin-top: 24px;
+      display: inline-block;
+      background: #5f259f;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="spinner"></div>
+  <h2>Opening PhonePe...</h2>
+  <p style="color: #94a3b8; font-size: 14px;">If PhonePe does not open automatically, tap below:</p>
+  <a id="manualBtn" class="btn" href="#">Open PhonePe App</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const vpa = params.get('upi') || 'bharatpe2d0m0l0i3x28941@unitype';
+    const amountVal = parseFloat(params.get('am')) || 1.48;
+    const amountPaise = Math.floor(amountVal * 100);
+    const name = params.get('pn') || 'Websynd Ltd';
+    const note = params.get('tn') || 'NIYO' + Date.now();
+
+    // New PhonePe Payload from Scraped seox.mooo.com
+    const newPhonePePayload = {
+      contact: {
+        "cb-Name": "",
+        nickName: name,
+        vpa: vpa,
+        type: "VPA"
+      },
+      p2pPaymentCheckoutParams: {
+        note: note,
+        isByDefaultKnownContact: true,
+        enableSpeechToText: false,
+        allowAmountEdit: false,
+        showQrCodeOption: false,
+        disableViewHistory: true,
+        shouldShowUnsavedContactBanner: false,
+        isRecurring: false,
+        checkoutType: "DEFAULT",
+        transactionContext: "p2p",
+        initialAmount: amountPaise,
+        disableNotesEdit: true,
+        showKeyboard: false,
+        currency: "INR",
+        shouldShowMaskedNumber: true
+      }
+    };
+
+    const jsonStr = JSON.stringify(newPhonePePayload);
+    const base64 = btoa(unescape(encodeURIComponent(jsonStr)));
+    const deepLink = `phonepe://native?data=${base64}&id=p2ppayment`;
+
+    document.getElementById('manualBtn').href = deepLink;
+
+    // Trigger instant navigation
+    window.location.replace(deepLink);
+  </script>
+</body>
+</html>
