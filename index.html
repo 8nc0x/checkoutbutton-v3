@@ -3,174 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>UPI Checkout Simulator | MobiKwik & PhonePe</title>
+  <title>UPI Checkout Test</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       -webkit-tap-highlight-color: transparent;
-    }
-    .tap-effect:active {
-      transform: scale(0.97);
     }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col items-center justify-start p-4 sm:p-6 antialiased">
+<body class="bg-[#f4f7fb] text-slate-800 min-h-screen flex flex-col items-center justify-start p-4 antialiased">
 
-  <!-- Container -->
-  <main class="w-full max-w-md bg-slate-950/80 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl backdrop-blur-xl mt-2 mb-8">
+  <main class="w-full max-w-sm bg-white border border-slate-200 rounded-2xl p-5 shadow-sm mt-3 mb-8">
     
-    <!-- Header -->
-    <header class="flex items-center justify-between pb-4 border-b border-slate-800/80 mb-5">
+    <!-- Top Header -->
+    <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
       <div>
-        <div class="flex items-center gap-2">
-          <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">Netlify Test Bench</span>
-        </div>
-        <h1 class="text-xl font-extrabold text-white mt-0.5">UPI Intent Simulator</h1>
+        <h1 class="text-base font-bold text-slate-900">Payment Test</h1>
+        <p class="text-xs text-slate-500">Select an app to pay</p>
       </div>
-      <button type="button" onclick="randomizeNote()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-xl border border-slate-700/80 transition-all font-medium">
-        ↻ New Note
+      <button type="button" onclick="randomizeNote()" class="text-xs text-blue-600 hover:text-blue-700 font-semibold px-2.5 py-1 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+        New Ref
       </button>
-    </header>
+    </div>
 
-    <!-- Test Parameters Form -->
-    <section class="space-y-3 mb-6 bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
-      <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Simulated Parameters</div>
-      
+    <!-- Inputs -->
+    <div class="space-y-2.5 mb-5 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 text-xs">
       <div>
-        <label class="block text-xs font-semibold text-slate-400 mb-1">Payee VPA (UPI ID)</label>
-        <input type="text" id="vpaInput" value="bharatpe2d0m0l0i3x28941@unitype" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono" oninput="updateAllLinks()">
+        <label class="block font-medium text-slate-600 mb-1">UPI ID</label>
+        <input type="text" id="vpaInput" value="bharatpe2d0m0l0i3x28941@unitype" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-800 font-mono text-xs focus:outline-none focus:border-blue-500" oninput="updateAllLinks()">
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-2 gap-2">
         <div>
-          <label class="block text-xs font-semibold text-slate-400 mb-1">Payee Name</label>
-          <input type="text" id="nameInput" value="Websynd Ltd" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500" oninput="updateAllLinks()">
+          <label class="block font-medium text-slate-600 mb-1">Payee Name</label>
+          <input type="text" id="nameInput" value="Websynd Ltd" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-800 text-xs focus:outline-none focus:border-blue-500" oninput="updateAllLinks()">
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-400 mb-1">Amount (₹)</label>
-          <input type="number" step="0.01" id="amountInput" value="1.48" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono font-bold text-emerald-400" oninput="updateAllLinks()">
+          <label class="block font-medium text-slate-600 mb-1">Amount (₹)</label>
+          <input type="number" step="0.01" id="amountInput" value="1.48" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-900 font-semibold text-xs focus:outline-none focus:border-blue-500" oninput="updateAllLinks()">
         </div>
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-slate-400 mb-1">Order Note / Transaction ID</label>
-        <input type="text" id="noteInput" value="NIYO24731795341400" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono" oninput="updateAllLinks()">
+        <label class="block font-medium text-slate-600 mb-1">Note / Order ID</label>
+        <input type="text" id="noteInput" value="NIYO24731795341400" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-800 font-mono text-xs focus:outline-none focus:border-blue-500" oninput="updateAllLinks()">
       </div>
-    </section>
+    </div>
 
-    <!-- The 3 Action Buttons -->
-    <section class="space-y-3.5 mb-6">
+    <!-- 3 Buttons -->
+    <div class="space-y-2.5 mb-5">
       
-      <!-- 1. MobiKwik Button -->
-      <div>
-        <div class="flex items-center justify-between text-xs text-slate-400 mb-1 px-1">
-          <span class="font-bold text-sky-400">#1 MobiKwik Deep Link</span>
-          <span class="text-[10px] bg-sky-950 text-sky-300 px-2 py-0.5 rounded border border-sky-800">mobikwik://</span>
-        </div>
-        <a id="mobikwikBtn" href="#" class="tap-effect flex items-center justify-between w-full p-3.5 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 rounded-2xl shadow-lg shadow-sky-950/40 font-bold text-white transition-all no-underline border border-sky-400/20">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-sky-600 font-black text-lg shadow-inner">
-              M
-            </div>
-            <div class="text-left">
-              <div class="text-sm font-extrabold tracking-wide">Pay with MobiKwik</div>
-              <div class="text-[11px] font-normal text-sky-100/80">Direct app intent trigger</div>
-            </div>
+      <!-- 1. MobiKwik -->
+      <a id="mobikwikBtn" href="#" class="flex items-center justify-between w-full p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-blue-300 rounded-xl transition-all active:scale-[0.99] no-underline">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-sky-500 flex items-center justify-center text-white font-bold text-base shadow-sm">
+            M
           </div>
-          <span class="text-xs bg-white/20 px-2.5 py-1 rounded-lg">Launch →</span>
-        </a>
-      </div>
-
-      <!-- 2. Old PhonePe Button -->
-      <div>
-        <div class="flex items-center justify-between text-xs text-slate-400 mb-1 px-1">
-          <span class="font-bold text-purple-400">#2 Old PhonePe (cbsName)</span>
-          <span class="text-[10px] bg-purple-950 text-purple-300 px-2 py-0.5 rounded border border-purple-800">phonepe://native</span>
+          <div class="text-left">
+            <span class="text-xs font-bold text-slate-900 block">MobiKwik</span>
+            <span class="text-[11px] text-slate-500">mobikwik://</span>
+          </div>
         </div>
-        <a id="phonepeOldBtn" href="#" class="tap-effect flex items-center justify-between w-full p-3.5 bg-gradient-to-r from-[#5f259f] to-[#481c79] hover:from-[#6b2ab3] hover:to-[#54218d] rounded-2xl shadow-lg shadow-purple-950/40 font-bold text-white transition-all no-underline border border-purple-400/20">
+        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Pay →</span>
+      </a>
+
+      <!-- 2. Old PhonePe -->
+      <a id="phonepeOldBtn" href="#" class="flex items-center justify-between w-full p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-purple-300 rounded-xl transition-all active:scale-[0.99] no-underline">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-[#5f259f] flex items-center justify-center text-white font-bold text-base shadow-sm">
+            पे
+          </div>
+          <div class="text-left">
+            <span class="text-xs font-bold text-slate-900 block">PhonePe (Old Method)</span>
+            <span class="text-[11px] text-slate-500">Direct • cbsName</span>
+          </div>
+        </div>
+        <span class="text-xs font-semibold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md">Pay →</span>
+      </a>
+
+      <!-- 3. New PhonePe -->
+      <div class="space-y-1.5">
+        <a id="phonepeNewBtn" href="#" class="flex items-center justify-between w-full p-3 bg-white hover:bg-slate-50 border border-blue-200 hover:border-blue-400 rounded-xl transition-all active:scale-[0.99] no-underline">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white font-extrabold text-xl border border-white/20">
+            <div class="w-9 h-9 rounded-lg bg-[#5f259f] flex items-center justify-center text-white font-bold text-base shadow-sm">
               पे
             </div>
             <div class="text-left">
-              <div class="text-sm font-extrabold tracking-wide">PhonePe (Old Method)</div>
-              <div class="text-[11px] font-normal text-purple-200/70">"cbsName": PayeeName (Direct link)</div>
+              <span class="text-xs font-bold text-slate-900 block">PhonePe (New Method)</span>
+              <span class="text-[11px] text-slate-500">Direct • cb-Name</span>
             </div>
           </div>
-          <span class="text-xs bg-white/20 px-2.5 py-1 rounded-lg">Launch →</span>
+          <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Pay →</span>
+        </a>
+
+        <!-- Optional 302 trigger -->
+        <a id="phonepe302Btn" href="#" class="block text-center w-full py-1.5 bg-slate-100 hover:bg-slate-200 text-[11px] font-semibold text-slate-700 rounded-lg transition-colors no-underline">
+          Test New PhonePe via 302 Redirect
         </a>
       </div>
 
-      <!-- 3. New PhonePe Button -->
-      <div>
-        <div class="flex items-center justify-between text-xs text-slate-400 mb-1 px-1">
-          <span class="font-bold text-emerald-400">#3 New PhonePe (cb-Name + 302 Option)</span>
-          <span class="text-[10px] bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800">Newly Discovered</span>
-        </div>
-        <a id="phonepeNewBtn" href="#" class="tap-effect flex items-center justify-between w-full p-3.5 bg-gradient-to-r from-purple-600 via-indigo-600 to-emerald-600 hover:from-purple-500 hover:to-emerald-500 rounded-2xl shadow-lg shadow-emerald-950/40 font-bold text-white transition-all no-underline border border-emerald-400/30">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-white text-[#5f259f] flex items-center justify-center font-extrabold text-xl shadow-md">
-              पे
-            </div>
-            <div class="text-left">
-              <div class="text-sm font-extrabold tracking-wide">PhonePe (New Method)</div>
-              <div class="text-[11px] font-normal text-emerald-200/90">"cb-Name": "" (Scraped Payload)</div>
-            </div>
-          </div>
-          <span class="text-xs bg-white/20 px-2.5 py-1 rounded-lg">Launch →</span>
-        </a>
+    </div>
 
-        <!-- Extra 302 Redirect Trigger for New PhonePe -->
-        <div class="mt-2 flex items-center gap-2">
-          <a id="phonepe302Btn" href="#" class="tap-effect flex-1 text-center py-2 px-3 bg-slate-800 hover:bg-slate-700 text-[11.5px] font-semibold text-emerald-300 rounded-xl border border-emerald-900/40 transition-all no-underline">
-            ⚡ Trigger via 302 Redirect Page
-          </a>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Raw Payload Inspector / Toggle -->
-    <details class="bg-slate-900/90 rounded-2xl p-4 border border-slate-800 text-xs">
-      <summary class="font-bold text-slate-300 cursor-pointer select-none">
-        🔍 Inspect Generated Links & JSON Payloads
+    <!-- Inspector -->
+    <details class="text-[11px] text-slate-600 bg-slate-50 rounded-xl p-3 border border-slate-200/70">
+      <summary class="font-semibold text-slate-700 cursor-pointer select-none">
+        View Links & Payload
       </summary>
       
-      <div class="mt-4 space-y-4">
+      <div class="mt-3 space-y-3 font-mono">
         <div>
-          <div class="flex items-center justify-between text-sky-400 font-semibold mb-1">
-            <span>MobiKwik Scheme</span>
-            <button type="button" onclick="copyToClipboard('mobikwikRaw')" class="text-[10px] text-slate-400 hover:text-white">Copy</button>
-          </div>
-          <textarea id="mobikwikRaw" readonly rows="2" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 font-mono text-[11px] text-slate-300 select-all"></textarea>
+          <span class="font-bold text-slate-800 block mb-0.5">MobiKwik URL:</span>
+          <textarea id="mobikwikRaw" readonly rows="2" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700"></textarea>
         </div>
 
         <div>
-          <div class="flex items-center justify-between text-purple-400 font-semibold mb-1">
-            <span>Old PhonePe (Decoded JSON Payload)</span>
-            <button type="button" onclick="copyToClipboard('phonepeOldJson')" class="text-[10px] text-slate-400 hover:text-white">Copy</button>
-          </div>
-          <pre id="phonepeOldJson" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 font-mono text-[10.5px] text-slate-300 overflow-x-auto"></pre>
+          <span class="font-bold text-slate-800 block mb-0.5">Old PhonePe Payload:</span>
+          <pre id="phonepeOldJson" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700 overflow-x-auto"></pre>
         </div>
 
         <div>
-          <div class="flex items-center justify-between text-emerald-400 font-semibold mb-1">
-            <span>New PhonePe (Decoded JSON Payload)</span>
-            <button type="button" onclick="copyToClipboard('phonepeNewJson')" class="text-[10px] text-slate-400 hover:text-white">Copy</button>
-          </div>
-          <pre id="phonepeNewJson" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 font-mono text-[10.5px] text-slate-300 overflow-x-auto"></pre>
+          <span class="font-bold text-slate-800 block mb-0.5">New PhonePe Payload:</span>
+          <pre id="phonepeNewJson" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700 overflow-x-auto"></pre>
         </div>
       </div>
     </details>
-
-    <footer class="mt-6 text-center text-slate-500 text-[11px]">
-      Deploy directly to Netlify • Ready for iOS & Android testing
-    </footer>
 
   </main>
 
@@ -182,8 +139,7 @@
     }
 
     function buildBase64(obj) {
-      const jsonStr = JSON.stringify(obj);
-      return btoa(unescape(encodeURIComponent(jsonStr)));
+      return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
     }
 
     function updateAllLinks() {
@@ -193,13 +149,12 @@
       const amountPaise = Math.floor(amountVal * 100);
       const note = document.getElementById('noteInput').value.trim();
 
-      // 1. MobiKwik Scheme
-      // mobikwik://upi/verifyVpa?vpa=...&amount=...&note=...
+      // 1. MobiKwik
       const mobikwikUrl = `mobikwik://upi/verifyVpa?vpa=${encodeURIComponent(vpa)}&amount=${amountVal.toFixed(2)}&note=${encodeURIComponent(note)}`;
       document.getElementById('mobikwikBtn').href = mobikwikUrl;
       document.getElementById('mobikwikRaw').value = mobikwikUrl;
 
-      // 2. Old PhonePe (cbsName)
+      // 2. Old PhonePe
       const oldPhonePePayload = {
         contact: {
           cbsName: name,
@@ -226,11 +181,10 @@
         }
       };
       const oldBase64 = buildBase64(oldPhonePePayload);
-      const oldPhonePeUrl = `phonepe://native?data=${oldBase64}&id=p2ppayment`;
-      document.getElementById('phonepeOldBtn').href = oldPhonePeUrl;
+      document.getElementById('phonepeOldBtn').href = `phonepe://native?data=${oldBase64}&id=p2ppayment`;
       document.getElementById('phonepeOldJson').textContent = JSON.stringify(oldPhonePePayload, null, 2);
 
-      // 3. New PhonePe ("cb-Name": "")
+      // 3. New PhonePe
       const newPhonePePayload = {
         contact: {
           "cb-Name": "",
@@ -257,24 +211,13 @@
         }
       };
       const newBase64 = buildBase64(newPhonePePayload);
-      const newPhonePeUrl = `phonepe://native?data=${newBase64}&id=p2ppayment`;
-      document.getElementById('phonepeNewBtn').href = newPhonePeUrl;
+      document.getElementById('phonepeNewBtn').href = `phonepe://native?data=${newBase64}&id=p2ppayment`;
       document.getElementById('phonepeNewJson').textContent = JSON.stringify(newPhonePePayload, null, 2);
 
-      // 302 Redirect Page Option (works on Netlify both static & serverless)
-      const redirectPageUrl = `pnintent.html?upi=${encodeURIComponent(vpa)}&am=${amountVal.toFixed(2)}&pn=${encodeURIComponent(name)}&tn=${encodeURIComponent(note)}`;
-      document.getElementById('phonepe302Btn').href = redirectPageUrl;
+      // 302 redirect trigger
+      document.getElementById('phonepe302Btn').href = `pnintent.html?upi=${encodeURIComponent(vpa)}&am=${amountVal.toFixed(2)}&pn=${encodeURIComponent(name)}&tn=${encodeURIComponent(note)}`;
     }
 
-    function copyToClipboard(elementId) {
-      const el = document.getElementById(elementId);
-      const text = el.value || el.textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Copied to clipboard!");
-      });
-    }
-
-    // Initialize on load
     updateAllLinks();
   </script>
 </body>
