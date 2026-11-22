@@ -57,9 +57,23 @@
       </div>
     </div>
 
-    <!-- 3 Buttons -->
+    <!-- 4 Buttons -->
     <div class="space-y-2.5 mb-5">
       
+      <!-- 0. Universal UPI Chooser -->
+      <a id="universalUpiBtn" href="#" class="flex items-center justify-between w-full p-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl transition-all active:scale-[0.99] no-underline">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center text-white font-black text-xs tracking-wider border border-white/20">
+            UPI
+          </div>
+          <div class="text-left">
+            <span class="text-xs font-bold text-white block">Any UPI App (OS Chooser)</span>
+            <span class="text-[11px] text-slate-300">upi://pay • Universal Intent</span>
+          </div>
+        </div>
+        <span class="text-xs font-semibold text-white bg-white/20 px-2.5 py-1 rounded-md">Open →</span>
+      </a>
+
       <!-- 1. MobiKwik -->
       <a id="mobikwikBtn" href="#" class="flex items-center justify-between w-full p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-blue-300 rounded-xl transition-all active:scale-[0.99] no-underline">
         <div class="flex items-center gap-3">
@@ -119,6 +133,11 @@
       
       <div class="mt-3 space-y-3 font-mono">
         <div>
+          <span class="font-bold text-slate-800 block mb-0.5">Universal UPI Intent (OS Chooser):</span>
+          <textarea id="universalUpiRaw" readonly rows="2" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700"></textarea>
+        </div>
+
+        <div>
           <span class="font-bold text-slate-800 block mb-0.5">MobiKwik URL:</span>
           <textarea id="mobikwikRaw" readonly rows="2" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700"></textarea>
         </div>
@@ -170,6 +189,21 @@
       const amountVal = parseFloat(document.getElementById('amountInput').value) || 0;
       const amountPaise = Math.floor(amountVal * 100);
       const note = document.getElementById('noteInput').value.trim();
+
+      // 0. Universal UPI Intent (Standard Scheme & Android System Chooser)
+      const cleanUpiParams = new URLSearchParams();
+      cleanUpiParams.append("pa", vpa);
+      cleanUpiParams.append("pn", name);
+      cleanUpiParams.append("am", amountVal.toFixed(2));
+      cleanUpiParams.append("tr", note);
+      cleanUpiParams.append("tn", note);
+      cleanUpiParams.append("cu", "INR");
+      const standardUpi = `upi://pay?${cleanUpiParams.toString().replace(/\+/g, "%20")}`;
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const androidChooser = `intent://${cleanUpiParams.toString().replace(/\+/g, "%20")}#Intent;scheme=upi;action=android.intent.action.VIEW;end`;
+      const universalTarget = isAndroid ? androidChooser : standardUpi;
+      document.getElementById('universalUpiBtn').href = universalTarget;
+      document.getElementById('universalUpiRaw').value = universalTarget;
 
       // 1. MobiKwik
       const mobikwikUrl = `mobikwik://upi/verifyVpa?vpa=${encodeURIComponent(vpa)}&amount=${amountVal.toFixed(2)}&note=${encodeURIComponent(note)}`;
