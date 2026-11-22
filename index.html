@@ -30,7 +30,13 @@
     <!-- Inputs -->
     <div class="space-y-2.5 mb-5 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 text-xs">
       <div>
-        <label class="block font-medium text-slate-600 mb-1">UPI ID</label>
+        <div class="flex items-center justify-between mb-1">
+          <label class="font-medium text-slate-600">UPI ID</label>
+          <button type="button" onclick="pasteUpiId()" class="text-[11px] font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded transition-colors flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+            Paste
+          </button>
+        </div>
         <input type="text" id="vpaInput" value="bharatpe2d0m0l0i3x28941@unitype" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-800 font-mono text-xs focus:outline-none focus:border-blue-500" oninput="updateAllLinks()">
       </div>
 
@@ -132,6 +138,22 @@
   </main>
 
   <script>
+    async function pasteUpiId() {
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text && text.trim()) {
+          document.getElementById('vpaInput').value = text.trim();
+          updateAllLinks();
+        }
+      } catch (err) {
+        const manual = prompt("Paste UPI ID here:");
+        if (manual && manual.trim()) {
+          document.getElementById('vpaInput').value = manual.trim();
+          updateAllLinks();
+        }
+      }
+    }
+
     function randomizeNote() {
       const rand = Math.floor(10000000000000 + Math.random() * 90000000000000);
       document.getElementById('noteInput').value = 'NIYO' + rand;
