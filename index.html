@@ -23,7 +23,7 @@
     <div class="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
       <div>
         <h1 class="text-base font-bold text-slate-900">Payment Test</h1>
-        <p class="text-xs text-slate-500">BloomXPE UPI App Chooser</p>
+        <p class="text-xs text-slate-500">Select an app to pay</p>
       </div>
       <button type="button" onclick="randomizeNote()" class="text-xs text-blue-600 hover:text-blue-700 font-semibold px-2.5 py-1 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
         New Ref
@@ -54,8 +54,8 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-2">
-        <div class="col-span-2">
+      <div class="grid grid-cols-2 gap-2">
+        <div>
           <label class="block font-medium text-slate-600 mb-1">Note / Order ID</label>
           <input type="text" id="noteInput" value="NIYO24731795341400" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-800 font-mono text-xs focus:outline-none focus:border-blue-500" oninput="updateAllLinks()">
         </div>
@@ -66,49 +66,213 @@
       </div>
     </div>
 
-    <!-- Main Payment Trigger -->
-    <div class="space-y-2.5 mb-5">
+    <!-- Section 1: Main Apps & Chooser -->
+    <div class="space-y-2.5 mb-6">
       
-      <!-- In-Browser Universal App Chooser Button -->
-      <button type="button" onclick="openUpiBottomSheet()" class="flex items-center justify-between w-full p-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl transition-all active:scale-[0.99] text-left shadow-sm">
+      <!-- 0. Universal UPI Chooser (Opens in-browser bottom sheet) -->
+      <button type="button" onclick="openUpiBottomSheet()" class="flex items-center justify-between w-full p-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl transition-all active:scale-[0.99] text-left">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white font-black text-xs tracking-wider border border-white/20 shrink-0">
+          <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center text-white font-black text-xs tracking-wider border border-white/20 shrink-0">
             UPI
           </div>
           <div>
-            <span class="text-sm font-bold text-white block">Choose UPI App</span>
-            <span class="text-[11px] text-slate-300">Opens BloomXPE 9-App Chooser Sheet</span>
+            <span class="text-xs font-bold text-white block">Any UPI App (Choose App)</span>
+            <span class="text-[11px] text-slate-300">Opens in-browser app selector</span>
           </div>
         </div>
-        <span class="text-xs font-semibold text-white bg-white/20 px-2.5 py-1 rounded-md shrink-0">Select →</span>
+        <span class="text-xs font-semibold text-white bg-white/20 px-2.5 py-1 rounded-md shrink-0">Choose →</span>
       </button>
 
-      <!-- Quick Action Buttons -->
-      <div class="grid grid-cols-2 gap-2 pt-1">
-        <a id="quickPhonePeBtn" href="#" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-[#5f259f] active:scale-[0.98] no-underline">
-          <span>PhonePe Native</span>
+      <!-- 1. MobiKwik Direct Button -->
+      <a id="mobikwikBtn" href="#" class="flex items-center justify-between w-full p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-blue-300 rounded-xl transition-all active:scale-[0.99] no-underline">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-sky-500 flex items-center justify-center text-white font-bold text-base shadow-sm shrink-0">
+            M
+          </div>
+          <div class="text-left">
+            <span class="text-xs font-bold text-slate-900 block">MobiKwik</span>
+            <span class="text-[11px] text-slate-500">mobikwik://</span>
+          </div>
+        </div>
+        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md shrink-0">Pay →</span>
+      </a>
+
+      <!-- 2. Old PhonePe Direct Button -->
+      <a id="phonepeOldBtn" href="#" class="flex items-center justify-between w-full p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-purple-300 rounded-xl transition-all active:scale-[0.99] no-underline">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-[#5f259f] flex items-center justify-center text-white font-bold text-base shadow-sm shrink-0">
+            पे
+          </div>
+          <div class="text-left">
+            <span class="text-xs font-bold text-slate-900 block">PhonePe (Old Method)</span>
+            <span class="text-[11px] text-slate-500">Direct • cbsName</span>
+          </div>
+        </div>
+        <span class="text-xs font-semibold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md shrink-0">Pay →</span>
+      </a>
+
+      <!-- 3. New PhonePe Direct Button -->
+      <div class="space-y-1.5">
+        <a id="phonepeNewBtn" href="#" class="flex items-center justify-between w-full p-3 bg-white hover:bg-slate-50 border border-blue-200 hover:border-blue-400 rounded-xl transition-all active:scale-[0.99] no-underline">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-[#5f259f] flex items-center justify-center text-white font-bold text-base shadow-sm shrink-0">
+              पे
+            </div>
+            <div class="text-left">
+              <span class="text-xs font-bold text-slate-900 block">PhonePe (New Method)</span>
+              <span class="text-[11px] text-slate-500">Direct • cb-Name</span>
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md shrink-0">Pay →</span>
         </a>
-        <a id="quickMobiKwikBtn" href="#" class="flex items-center justify-center gap-2 p-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-sky-600 active:scale-[0.98] no-underline">
-          <span>MobiKwik</span>
+
+        <!-- 302 trigger -->
+        <a id="phonepe302Btn" href="#" class="block text-center w-full py-1.5 bg-slate-100 hover:bg-slate-200 text-[11px] font-semibold text-slate-700 rounded-lg transition-colors no-underline">
+          Test New PhonePe via 302 Redirect
         </a>
       </div>
 
     </div>
 
+    <!-- Section 2: Custom Functions (mc=5411) Intent Suite -->
+    <div class="pt-4 border-t border-slate-200/80 mb-5">
+      <div class="flex items-center justify-between mb-2.5">
+        <div>
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700">Custom Suite (mc=5411)</h2>
+          <p class="text-[10.5px] text-slate-400">Generated via custom-functions.php</p>
+        </div>
+        <span class="text-[10px] bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded">mc=5411</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        
+        <!-- Amazon Pay -->
+        <a id="customAmazonBtn" href="#" class="flex items-center justify-between p-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-[#232f3e] text-[#ff9900] flex items-center justify-center font-black text-[10px] shrink-0">
+              a
+            </div>
+            <span class="font-semibold text-slate-800 text-[11.5px]">Amazon Pay</span>
+          </div>
+          <span class="text-slate-400 text-xs">→</span>
+        </a>
+
+        <!-- BHIM -->
+        <a id="customBhimBtn" href="#" class="flex items-center justify-between p-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-teal-600 text-white flex items-center justify-center font-bold text-[9px] shrink-0">
+              BHIM
+            </div>
+            <span class="font-semibold text-slate-800 text-[11.5px]">BHIM</span>
+          </div>
+          <span class="text-slate-400 text-xs">→</span>
+        </a>
+
+        <!-- iMobile (ICICI) -->
+        <a id="customImobileBtn" href="#" class="flex items-center justify-between p-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-orange-600 text-white flex items-center justify-center font-black text-[9px] shrink-0">
+              iM
+            </div>
+            <span class="font-semibold text-slate-800 text-[11.5px]">iMobile</span>
+          </div>
+          <span class="text-slate-400 text-xs">→</span>
+        </a>
+
+        <!-- Freecharge -->
+        <a id="customFreechargeBtn" href="#" class="flex items-center justify-between p-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-red-500 text-white flex items-center justify-center font-black text-[10px] shrink-0">
+              FC
+            </div>
+            <span class="font-semibold text-slate-800 text-[11.5px]">Freecharge</span>
+          </div>
+          <span class="text-slate-400 text-xs">→</span>
+        </a>
+
+        <!-- Paytm Pay (mc=5411) -->
+        <a id="customPaytmPayBtn" href="#" class="flex items-center justify-between p-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-[#00BAF2] text-white flex items-center justify-center font-black text-[9px] shrink-0">
+              paytm
+            </div>
+            <span class="font-semibold text-slate-800 text-[11.5px]">Paytm (5411)</span>
+          </div>
+          <span class="text-slate-400 text-xs">→</span>
+        </a>
+
+        <!-- PhonePe Direct (mc=5411) -->
+        <a id="customPhonePePayBtn" href="#" class="flex items-center justify-between p-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-[#5f259f] text-white flex items-center justify-center font-extrabold text-[11px] shrink-0">
+              पे
+            </div>
+            <span class="font-semibold text-slate-800 text-[11.5px]">PhonePe (5411)</span>
+          </div>
+          <span class="text-slate-400 text-xs">→</span>
+        </a>
+
+        <!-- PhonePe Native (cbsName: "") from generate_gpay_links -->
+        <a id="customPhonePeGpayLinkBtn" href="#" class="col-span-2 flex items-center justify-between p-2.5 bg-purple-50/60 hover:bg-purple-100/60 border border-purple-200 rounded-xl transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-[#5f259f] text-white flex items-center justify-center font-extrabold text-[11px] shrink-0">
+              पे
+            </div>
+            <div>
+              <span class="font-bold text-slate-900 text-[11.5px] block leading-tight">PhonePe Native ("cbsName": "")</span>
+              <span class="text-[10px] text-purple-700">From generate_gpay_links()</span>
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-purple-700 bg-white px-2 py-0.5 rounded shadow-sm">Pay →</span>
+        </a>
+
+        <!-- Paytm Cash Wallet from generate_gpay_links -->
+        <a id="customPaytmCashWalletBtn" href="#" class="col-span-2 flex items-center justify-between p-2.5 bg-sky-50/60 hover:bg-sky-100/60 border border-sky-200 rounded-xl transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-[#00BAF2] text-white flex items-center justify-center font-black text-[9px] shrink-0">
+              paytm
+            </div>
+            <div>
+              <span class="font-bold text-slate-900 text-[11.5px] block leading-tight">Paytm Cash Wallet</span>
+              <span class="text-[10px] text-sky-700">paytmmp://cash_wallet?...&featuretype=money_transfer</span>
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-sky-700 bg-white px-2 py-0.5 rounded shadow-sm">Pay →</span>
+        </a>
+
+      </div>
+    </div>
+
     <!-- Inspector -->
     <details class="text-[11px] text-slate-600 bg-slate-50 rounded-xl p-3 border border-slate-200/70">
       <summary class="font-semibold text-slate-700 cursor-pointer select-none">
-        View BloomXPE Generated Links
+        View Links & Payload
       </summary>
       
-      <div class="mt-3 space-y-2.5 font-mono text-[10px]">
+      <div class="mt-3 space-y-3 font-mono">
         <div>
-          <span class="font-bold text-slate-800 block">Base UPI String:</span>
-          <textarea id="baseUpiRaw" readonly rows="2" class="w-full bg-white border border-slate-200 rounded p-1.5 text-slate-700"></textarea>
+          <span class="font-bold text-slate-800 block mb-0.5">generate_upi_string Links (JSON):</span>
+          <pre id="customUpiStringJson" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700 overflow-x-auto"></pre>
         </div>
+
         <div>
-          <span class="font-bold text-slate-800 block">PhonePe Native Payload:</span>
-          <pre id="phonepeJsonRaw" class="w-full bg-white border border-slate-200 rounded p-1.5 text-slate-700 overflow-x-auto"></pre>
+          <span class="font-bold text-slate-800 block mb-0.5">Universal UPI URL:</span>
+          <textarea id="universalUpiRaw" readonly rows="2" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700"></textarea>
+        </div>
+
+        <div>
+          <span class="font-bold text-slate-800 block mb-0.5">MobiKwik URL:</span>
+          <textarea id="mobikwikRaw" readonly rows="2" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700"></textarea>
+        </div>
+
+        <div>
+          <span class="font-bold text-slate-800 block mb-0.5">PhonePe Native (cbsName: "") Payload:</span>
+          <pre id="customPhonePeGpayJson" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700 overflow-x-auto"></pre>
+        </div>
+
+        <div>
+          <span class="font-bold text-slate-800 block mb-0.5">New PhonePe Payload (cb-Name):</span>
+          <pre id="phonepeNewJson" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700 overflow-x-auto"></pre>
         </div>
       </div>
     </details>
@@ -118,146 +282,160 @@
   <!-- Android-Style In-Browser Bottom Sheet Modal -->
   <div id="upiBottomSheet" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none flex flex-col justify-end" onclick="handleBackdropClick(event)">
     
-    <div id="sheetContainer" class="w-full max-w-sm mx-auto bg-white rounded-t-[28px] border-t border-slate-200 p-5 shadow-2xl transform translate-y-full sheet-transition max-h-[85vh] flex flex-col">
+    <div id="sheetContainer" class="w-full max-w-sm mx-auto bg-white rounded-t-[28px] border-t border-slate-200/80 p-5 shadow-2xl transform translate-y-full sheet-transition max-h-[85vh] flex flex-col">
       
-      <!-- Drag Handle -->
+      <!-- Drag Handle Indicator -->
       <div class="w-10 h-1 bg-slate-300 rounded-full mx-auto mb-3 shrink-0"></div>
 
       <!-- Sheet Header -->
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3 shrink-0">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-2 shrink-0">
         <div>
           <h3 class="text-sm font-bold text-slate-900 leading-tight">Pay with UPI App</h3>
-          <p class="text-[11px] text-slate-500 mt-0.5">Select your installed payment app</p>
+          <p class="text-[11px] text-slate-500 mt-0.5">Choose your installed application</p>
         </div>
         <button type="button" onclick="closeUpiBottomSheet()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-xs transition-colors">
           ✕
         </button>
       </div>
 
-      <!-- Apps List (Extracted from generate_upi_string + BloomXPE) -->
-      <div class="space-y-2 py-1 overflow-y-auto pr-0.5">
+      <!-- Apps List with Exact Intent Schemes -->
+      <div class="space-y-2 py-1 overflow-y-auto flex-1 pr-0.5">
         
-        <!-- 1. PhonePe (Native P2P) -->
-        <a id="sheetPhonePeNativeBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-purple-300 bg-white hover:bg-purple-50/30 transition-all active:scale-[0.98] no-underline">
+        <!-- 1. PhonePe (New cb-Name Method) -->
+        <a id="sheetPhonePeNewBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-purple-300 bg-white hover:bg-purple-50/30 transition-all active:scale-[0.98] no-underline">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-[#5f259f] flex items-center justify-center text-white font-black text-base shadow-sm shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-[#5f259f] flex items-center justify-center text-white font-black text-lg shadow-sm shrink-0">
               पे
             </div>
             <div class="text-left">
-              <span class="text-xs font-bold text-slate-900 block leading-tight">PhonePe (Native)</span>
-              <span class="text-[10px] text-slate-500">phonepe://native • Locked P2P</span>
+              <span class="text-xs font-bold text-slate-900 block leading-tight">PhonePe (cb-Name)</span>
+              <span class="text-[10.5px] text-slate-500">P2P Native • Scraped Schema</span>
             </div>
           </div>
           <span class="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-1 rounded">Open</span>
         </a>
 
-        <!-- 2. Google Pay -->
+        <!-- 2. PhonePe (cbsName: "" Method from generate_gpay_links) -->
+        <a id="sheetPhonePeGpayLinkBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-purple-300 bg-white hover:bg-purple-50/30 transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#5f259f] flex items-center justify-center text-white font-black text-lg shadow-sm shrink-0">
+              पे
+            </div>
+            <div class="text-left">
+              <span class="text-xs font-bold text-slate-900 block leading-tight">PhonePe (cbsName: "")</span>
+              <span class="text-[10.5px] text-slate-500">generate_gpay_links logic</span>
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-1 rounded">Open</span>
+        </a>
+
+        <!-- 3. Google Pay (gpay://upi/pay?pa=...&mc=5411) -->
         <a id="sheetGPayBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-blue-300 bg-white hover:bg-blue-50/30 transition-all active:scale-[0.98] no-underline">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm shrink-0">
-              <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98Z"/></svg>
+            <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98Z"/></svg>
             </div>
             <div class="text-left">
               <span class="text-xs font-bold text-slate-900 block leading-tight">Google Pay</span>
-              <span class="text-[10px] text-slate-500">gpay://upi/pay</span>
+              <span class="text-[10.5px] text-slate-500">gpay://upi/pay (mc=5411)</span>
             </div>
           </div>
           <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Open</span>
         </a>
 
-        <!-- 3. Paytm (Cash Wallet) -->
-        <a id="sheetPaytmWalletBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-sky-300 bg-white hover:bg-sky-50/30 transition-all active:scale-[0.98] no-underline">
+        <!-- 4. Paytm (paytmmp://pay?pa=...&mc=5411) -->
+        <a id="sheetPaytmBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-sky-300 bg-white hover:bg-sky-50/30 transition-all active:scale-[0.98] no-underline">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-[#00BAF2] flex items-center justify-center text-white font-black text-[10px] shadow-sm shrink-0 tracking-tight">
+            <div class="w-10 h-10 rounded-xl bg-[#00BAF2] flex items-center justify-center text-white font-black text-xs shadow-sm shrink-0 tracking-tight">
               paytm
             </div>
             <div class="text-left">
               <span class="text-xs font-bold text-slate-900 block leading-tight">Paytm</span>
-              <span class="text-[10px] text-slate-500">paytmmp://cash_wallet</span>
+              <span class="text-[10.5px] text-slate-500">paytmmp://pay (mc=5411)</span>
             </div>
           </div>
           <span class="text-xs font-semibold text-sky-600 bg-sky-50 px-2 py-1 rounded">Open</span>
         </a>
 
-        <!-- 4. Amazon Pay -->
-        <a id="sheetAmazonPayBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-amber-300 bg-white hover:bg-amber-50/30 transition-all active:scale-[0.98] no-underline">
+        <!-- 5. Amazon Pay -->
+        <a id="sheetAmazonBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-amber-300 bg-white hover:bg-amber-50/30 transition-all active:scale-[0.98] no-underline">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-[#232F3E] flex items-center justify-center text-[#FF9900] font-black text-xs shadow-sm shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-[#232f3e] text-[#ff9900] flex items-center justify-center font-black text-sm shadow-sm shrink-0">
               a
             </div>
             <div class="text-left">
               <span class="text-xs font-bold text-slate-900 block leading-tight">Amazon Pay</span>
-              <span class="text-[10px] text-slate-500">amazonpay://pay</span>
+              <span class="text-[10.5px] text-slate-500">amazonpay://pay (mc=5411)</span>
             </div>
           </div>
           <span class="text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-1 rounded">Open</span>
         </a>
 
-        <!-- 5. BHIM UPI -->
+        <!-- 6. BHIM -->
         <a id="sheetBhimBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-teal-300 bg-white hover:bg-teal-50/30 transition-all active:scale-[0.98] no-underline">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center text-white font-black text-[10px] shadow-sm shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-xs shadow-sm shrink-0">
               BHIM
             </div>
             <div class="text-left">
-              <span class="text-xs font-bold text-slate-900 block leading-tight">BHIM UPI</span>
-              <span class="text-[10px] text-slate-500">bhim://upi/pay</span>
+              <span class="text-xs font-bold text-slate-900 block leading-tight">BHIM</span>
+              <span class="text-[10.5px] text-slate-500">bhim://upi/pay (mc=5411)</span>
             </div>
           </div>
           <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-2 py-1 rounded">Open</span>
         </a>
 
-        <!-- 6. MobiKwik -->
-        <a id="sheetMobiKwikBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-sky-300 bg-white hover:bg-sky-50/30 transition-all active:scale-[0.98] no-underline">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-sky-500 flex items-center justify-center text-white font-black text-base shadow-sm shrink-0">
-              M
-            </div>
-            <div class="text-left">
-              <span class="text-xs font-bold text-slate-900 block leading-tight">MobiKwik</span>
-              <span class="text-[10px] text-slate-500">mobikwik://upi/verifyVpa</span>
-            </div>
-          </div>
-          <span class="text-xs font-semibold text-sky-600 bg-sky-50 px-2 py-1 rounded">Open</span>
-        </a>
-
         <!-- 7. iMobile (ICICI) -->
         <a id="sheetImobileBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-orange-300 bg-white hover:bg-orange-50/30 transition-all active:scale-[0.98] no-underline">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-[#c8222b] flex items-center justify-center text-white font-black text-xs shadow-sm shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center font-black text-xs shadow-sm shrink-0">
               iM
             </div>
             <div class="text-left">
               <span class="text-xs font-bold text-slate-900 block leading-tight">iMobile (ICICI)</span>
-              <span class="text-[10px] text-slate-500">imobile://pay</span>
+              <span class="text-[10.5px] text-slate-500">imobile://pay (mc=5411)</span>
             </div>
           </div>
           <span class="text-xs font-semibold text-orange-600 bg-orange-50 px-2 py-1 rounded">Open</span>
         </a>
 
         <!-- 8. Freecharge -->
-        <a id="sheetFreechargeBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-emerald-300 bg-white hover:bg-emerald-50/30 transition-all active:scale-[0.98] no-underline">
+        <a id="sheetFreechargeBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-rose-300 bg-white hover:bg-rose-50/30 transition-all active:scale-[0.98] no-underline">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-[#59B231] flex items-center justify-center text-white font-black text-xs shadow-sm shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-red-500 text-white flex items-center justify-center font-black text-xs shadow-sm shrink-0">
               FC
             </div>
             <div class="text-left">
               <span class="text-xs font-bold text-slate-900 block leading-tight">Freecharge</span>
-              <span class="text-[10px] text-slate-500">freecharge://upi/pay</span>
+              <span class="text-[10.5px] text-slate-500">freecharge://upi/pay (mc=5411)</span>
             </div>
           </div>
-          <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">Open</span>
+          <span class="text-xs font-semibold text-red-600 bg-rose-50 px-2 py-1 rounded">Open</span>
         </a>
 
-        <!-- 9. Standard UPI Generic -->
-        <a id="sheetUpiAllBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-dashed border-slate-300 hover:border-slate-400 bg-slate-50 hover:bg-slate-100 transition-all active:scale-[0.98] no-underline">
+        <!-- 9. MobiKwik -->
+        <a id="sheetMobiKwikBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-sky-300 bg-white hover:bg-sky-50/30 transition-all active:scale-[0.98] no-underline">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-slate-200 flex items-center justify-center text-slate-700 font-bold text-xs shrink-0">
-              UPI
+            <div class="w-10 h-10 rounded-xl bg-sky-500 flex items-center justify-center text-white font-black text-lg shadow-sm shrink-0">
+              M
             </div>
             <div class="text-left">
-              <span class="text-xs font-bold text-slate-800 block leading-tight">All Other UPI Apps</span>
-              <span class="text-[10px] text-slate-500">upi://pay?$base_upi</span>
+              <span class="text-xs font-bold text-slate-900 block leading-tight">MobiKwik</span>
+              <span class="text-[10.5px] text-slate-500">mobikwik://upi/verifyVpa</span>
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-sky-600 bg-sky-50 px-2 py-1 rounded">Open</span>
+        </a>
+
+        <!-- 10. Raw OS Default Intent -->
+        <a id="sheetRawUpiBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-dashed border-slate-300 hover:border-slate-400 bg-slate-50 hover:bg-slate-100 transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-slate-200 flex items-center justify-center text-slate-700 font-bold text-xs shrink-0">
+              OS
+            </div>
+            <div class="text-left">
+              <span class="text-xs font-bold text-slate-800 block leading-tight">Other Banking App</span>
+              <span class="text-[10.5px] text-slate-500">Standard upi://pay fallback</span>
             </div>
           </div>
           <span class="text-xs font-semibold text-slate-700 bg-slate-200 px-2 py-1 rounded">Open</span>
@@ -265,7 +443,7 @@
 
       </div>
 
-      <!-- Cancel -->
+      <!-- Cancel button -->
       <button type="button" onclick="closeUpiBottomSheet()" class="w-full mt-3 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-colors shrink-0">
         Cancel
       </button>
@@ -325,28 +503,10 @@
       }
     }
 
-    function updateAllLinks() {
-      const pa = document.getElementById('vpaInput').value.trim();
-      const pn = document.getElementById('nameInput').value.trim();
-      const am = parseFloat(document.getElementById('amountInput').value) || 0;
-      const tn = document.getElementById('noteInput').value.trim();
-      const mc = document.getElementById('mcInput').value.trim() || '5411';
-      const cu = 'INR';
-
-      // ── 1. BloomXPE Base UPI String ───────────────────────────────
-      // $base_upi = "pa=$upi_id&pn=$name&am=$amount&tn=$payment_id&cu=$cu&mc=$mc";
-      const baseParams = new URLSearchParams();
-      baseParams.append("pa", pa);
-      baseParams.append("pn", pn);
-      baseParams.append("am", am.toFixed(2));
-      baseParams.append("tn", tn);
-      baseParams.append("cu", cu);
-      if (mc) baseParams.append("mc", mc);
-      const base_upi = baseParams.toString().replace(/\+/g, "%20");
-      document.getElementById('baseUpiRaw').value = base_upi;
-
-      // ── 2. BloomXPE generate_upi_string array ──────────────────────
-      const upiStrings = {
+    // Extracted directly from custom-functions.php
+    function generate_upi_string(upi_id, name, amount, payment_id, cu = 'INR', mc = '5411') {
+      const base_upi = `pa=${encodeURIComponent(upi_id)}&pn=${encodeURIComponent(name)}&am=${amount}&tn=${encodeURIComponent(payment_id)}&cu=${cu}&mc=${mc}`;
+      return {
         phonepe: `phonepe://pay?${base_upi}`,
         paytm: `paytmmp://pay?${base_upi}`,
         gpay: `gpay://upi/pay?${base_upi}`,
@@ -356,21 +516,47 @@
         freecharge: `freecharge://upi/pay?${base_upi}`,
         upi_all: `upi://pay?${base_upi}`
       };
+    }
 
-      // ── 3. BloomXPE Paytm Wallet Link ─────────────────────────────
-      // $paytm_link = "paytmmp://cash_wallet?" . $upi_params . "&featuretype=money_transfer";
-      const paytmWalletUrl = `paytmmp://cash_wallet?${base_upi}&featuretype=money_transfer`;
+    function updateAllLinks() {
+      const vpa = document.getElementById('vpaInput').value.trim();
+      const name = document.getElementById('nameInput').value.trim();
+      const amountVal = parseFloat(document.getElementById('amountInput').value) || 0;
+      const amountStr = amountVal.toFixed(2);
+      const amountPaise = Math.floor(amountVal * 100);
+      const note = document.getElementById('noteInput').value.trim();
+      const mc = document.getElementById('mcInput').value.trim() || '5411';
 
-      // ── 4. BloomXPE PhonePe Native P2P Link ───────────────────────
-      const phonePePayload = {
+      // 0. BloomXPE custom-functions.php generate_upi_string implementation
+      const customLinks = generate_upi_string(vpa, name, amountStr, note, 'INR', mc);
+      document.getElementById('customUpiStringJson').textContent = JSON.stringify(customLinks, null, 2);
+
+      // Section 2 Buttons
+      document.getElementById('customAmazonBtn').href = customLinks.amazonpay;
+      document.getElementById('customBhimBtn').href = customLinks.bhim;
+      document.getElementById('customImobileBtn').href = customLinks.imobile;
+      document.getElementById('customFreechargeBtn').href = customLinks.freecharge;
+      document.getElementById('customPaytmPayBtn').href = customLinks.paytm;
+      document.getElementById('customPhonePePayBtn').href = customLinks.phonepe;
+
+      // Bottom Sheet Links from customLinks
+      document.getElementById('sheetAmazonBtn').href = customLinks.amazonpay;
+      document.getElementById('sheetBhimBtn').href = customLinks.bhim;
+      document.getElementById('sheetImobileBtn').href = customLinks.imobile;
+      document.getElementById('sheetFreechargeBtn').href = customLinks.freecharge;
+      document.getElementById('sheetPaytmBtn').href = customLinks.paytm;
+      document.getElementById('sheetGPayBtn').href = customLinks.gpay;
+
+      // generate_gpay_links() PhonePe implementation with "cbsName": ""
+      const gpayPhonePePayload = {
         contact: {
           cbsName: "",
-          nickName: pn,
-          vpa: pa,
+          nickName: name,
+          vpa: vpa,
           type: "VPA"
         },
         p2pPaymentCheckoutParams: {
-          note: tn,
+          note: note,
           isByDefaultKnownContact: true,
           enableSpeechToText: false,
           allowAmountEdit: false,
@@ -380,34 +566,117 @@
           isRecurring: false,
           checkoutType: "DEFAULT",
           transactionContext: "p2p",
-          initialAmount: Math.floor(am * 100),
+          initialAmount: amountPaise,
           disableNotesEdit: true,
           showKeyboard: false,
           currency: "INR",
           shouldShowMaskedNumber: true
         }
       };
-      const phonePeNativeUrl = `phonepe://native?data=${buildBase64(phonePePayload)}&id=p2ppayment`;
-      document.getElementById('phonepeJsonRaw').textContent = JSON.stringify(phonePePayload, null, 2);
+      const gpayPhonePeBase64 = buildBase64(gpayPhonePePayload);
+      const gpayPhonePeUrl = `phonepe://native?data=${gpayPhonePeBase64}&id=p2ppayment`;
+      document.getElementById('customPhonePeGpayLinkBtn').href = gpayPhonePeUrl;
+      document.getElementById('sheetPhonePeGpayLinkBtn').href = gpayPhonePeUrl;
+      document.getElementById('customPhonePeGpayJson').textContent = JSON.stringify(gpayPhonePePayload, null, 2);
 
-      // ── 5. MobiKwik Scheme ────────────────────────────────────────
-      const mobikwikUrl = `mobikwik://upi/verifyVpa?vpa=${encodeURIComponent(pa)}&amount=${am.toFixed(2)}&note=${encodeURIComponent(tn)}`;
+      // generate_gpay_links() Paytm implementation
+      const gpayPaytmParams = new URLSearchParams({
+        pa: vpa,
+        pn: name,
+        am: amountStr,
+        cu: "INR",
+        tn: note,
+        featuretype: "money_transfer"
+      });
+      const gpayPaytmUrl = `paytmmp://cash_wallet?${gpayPaytmParams.toString()}`;
+      document.getElementById('customPaytmCashWalletBtn').href = gpayPaytmUrl;
 
-      // ── 6. Wire Up UI Buttons ─────────────────────────────────────
-      // Main Page Quick Buttons
-      document.getElementById('quickPhonePeBtn').href = phonePeNativeUrl;
-      document.getElementById('quickMobiKwikBtn').href = mobikwikUrl;
+      // Universal UPI Intent (Standard Scheme & Android System Chooser)
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const cleanUpiParams = new URLSearchParams({
+        pa: vpa,
+        pn: name,
+        am: amountStr,
+        tr: note,
+        tn: note,
+        cu: "INR"
+      });
+      const standardUpi = `upi://pay?${cleanUpiParams.toString().replace(/\+/g, "%20")}`;
+      const androidChooser = `intent://${cleanUpiParams.toString().replace(/\+/g, "%20")}#Intent;scheme=upi;action=android.intent.action.VIEW;end`;
+      const universalTarget = isAndroid ? androidChooser : standardUpi;
+      document.getElementById('universalUpiRaw').value = universalTarget;
+      document.getElementById('sheetRawUpiBtn').href = universalTarget;
 
-      // Bottom Sheet App Buttons
-      document.getElementById('sheetPhonePeNativeBtn').href = phonePeNativeUrl;
-      document.getElementById('sheetGPayBtn').href = upiStrings.gpay;
-      document.getElementById('sheetPaytmWalletBtn').href = paytmWalletUrl;
-      document.getElementById('sheetAmazonPayBtn').href = upiStrings.amazonpay;
-      document.getElementById('sheetBhimBtn').href = upiStrings.bhim;
+      // MobiKwik
+      const mobikwikUrl = `mobikwik://upi/verifyVpa?vpa=${encodeURIComponent(vpa)}&amount=${amountStr}&note=${encodeURIComponent(note)}`;
+      document.getElementById('mobikwikBtn').href = mobikwikUrl;
+      document.getElementById('mobikwikRaw').value = mobikwikUrl;
       document.getElementById('sheetMobiKwikBtn').href = mobikwikUrl;
-      document.getElementById('sheetImobileBtn').href = upiStrings.imobile;
-      document.getElementById('sheetFreechargeBtn').href = upiStrings.freecharge;
-      document.getElementById('sheetUpiAllBtn').href = upiStrings.upi_all;
+
+      // Old PhonePe (cbsName: name)
+      const oldPhonePePayload = {
+        contact: {
+          cbsName: name,
+          nickName: name,
+          vpa: vpa,
+          type: "VPA"
+        },
+        p2pPaymentCheckoutParams: {
+          note: note,
+          isByDefaultKnownContact: true,
+          enableSpeechToText: false,
+          allowAmountEdit: false,
+          showQrCodeOption: false,
+          disableViewHistory: true,
+          shouldShowUnsavedContactBanner: false,
+          isRecurring: false,
+          checkoutType: "DEFAULT",
+          transactionContext: "p2p",
+          initialAmount: amountPaise,
+          disableNotesEdit: true,
+          showKeyboard: false,
+          currency: "INR",
+          shouldShowMaskedNumber: true
+        }
+      };
+      const oldBase64 = buildBase64(oldPhonePePayload);
+      const oldPhonePeUrl = `phonepe://native?data=${oldBase64}&id=p2ppayment`;
+      document.getElementById('phonepeOldBtn').href = oldPhonePeUrl;
+
+      // New PhonePe (cb-Name: "")
+      const newPhonePePayload = {
+        contact: {
+          "cb-Name": "",
+          nickName: name,
+          vpa: vpa,
+          type: "VPA"
+        },
+        p2pPaymentCheckoutParams: {
+          note: note,
+          isByDefaultKnownContact: true,
+          enableSpeechToText: false,
+          allowAmountEdit: false,
+          showQrCodeOption: false,
+          disableViewHistory: true,
+          shouldShowUnsavedContactBanner: false,
+          isRecurring: false,
+          checkoutType: "DEFAULT",
+          transactionContext: "p2p",
+          initialAmount: amountPaise,
+          disableNotesEdit: true,
+          showKeyboard: false,
+          currency: "INR",
+          shouldShowMaskedNumber: true
+        }
+      };
+      const newBase64 = buildBase64(newPhonePePayload);
+      const newPhonePeUrl = `phonepe://native?data=${newBase64}&id=p2ppayment`;
+      document.getElementById('phonepeNewBtn').href = newPhonePeUrl;
+      document.getElementById('sheetPhonePeNewBtn').href = newPhonePeUrl;
+      document.getElementById('phonepeNewJson').textContent = JSON.stringify(newPhonePePayload, null, 2);
+
+      // 302 redirect trigger
+      document.getElementById('phonepe302Btn').href = `pnintent.html?upi=${encodeURIComponent(vpa)}&am=${amountStr}&pn=${encodeURIComponent(name)}&tn=${encodeURIComponent(note)}`;
     }
 
     updateAllLinks();
