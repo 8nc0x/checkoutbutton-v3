@@ -1,9 +1,9 @@
 exports.handler = async (event) => {
   const params = event.queryStringParameters || {};
-  const vpa = params.upi || "bharatpe2d0m0l0i3x28941@unitype";
+  const vpa = params.upi || "BHARATPE.9N0G0O0Z8Z823291@unitype";
   const amountVal = parseFloat(params.am) || 1.48;
   const amountPaise = Math.floor(amountVal * 100);
-  const name = params.pn || "Websynd Ltd";
+  const name = params.pn || "Sudarshan Ankush Suryawanshi";
   const note = params.tn || ("NIYO" + Date.now());
 
   // Newly discovered PhonePe Payload schema
