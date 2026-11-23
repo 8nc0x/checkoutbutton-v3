@@ -97,6 +97,20 @@
         <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md shrink-0">Pay →</span>
       </a>
 
+      <!-- 1.5 Navi UPI Direct Button -->
+      <a id="naviBtn" href="#" class="flex items-center justify-between w-full p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-emerald-400 rounded-xl transition-all active:scale-[0.99] no-underline">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-[#00D09C] flex items-center justify-center text-white font-black text-base shadow-sm shrink-0">
+            N
+          </div>
+          <div class="text-left">
+            <span class="text-xs font-bold text-slate-900 block">Navi UPI</span>
+            <span class="text-[11px] text-slate-500 font-mono">com.naviapp</span>
+          </div>
+        </div>
+        <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md shrink-0">Pay →</span>
+      </a>
+
       <!-- 2. Old PhonePe Direct Button -->
       <a id="phonepeOldBtn" href="#" class="flex items-center justify-between w-full p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-purple-300 rounded-xl transition-all active:scale-[0.99] no-underline">
         <div class="flex items-center gap-3">
@@ -309,6 +323,25 @@
           </div>
           <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-2.5 py-1 rounded-md shrink-0">Pay →</span>
         </a>
+
+        <!-- 5. Navi (intent://pay?pa=...#Intent;scheme=upi;package=com.naviapp;end) -->
+        <div class="space-y-1.5 pt-1">
+          <a id="imgNaviIntentBtn" href="#" class="flex items-center justify-between w-full p-3 bg-emerald-50/70 hover:bg-emerald-100/70 border border-emerald-300 rounded-xl transition-all active:scale-[0.99] no-underline">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-[#00D09C] flex items-center justify-center text-white font-black text-base shadow-sm shrink-0">
+                N
+              </div>
+              <div class="text-left">
+                <span class="text-xs font-bold text-slate-900 block leading-tight">Navi (Chrome Intent Scheme)</span>
+                <span class="text-[10px] text-emerald-800 font-mono">intent://pay?...;package=com.naviapp;end</span>
+              </div>
+            </div>
+            <span class="text-xs font-semibold text-emerald-700 bg-white px-2.5 py-1 rounded-md shrink-0 shadow-sm">Pay →</span>
+          </a>
+          <a id="imgNaviPackageBtn" href="#" class="block text-center w-full py-1.5 bg-slate-100 hover:bg-slate-200 text-[10.5px] font-semibold text-slate-700 rounded-lg transition-colors no-underline font-mono">
+            upi://pay?...&package=com.naviapp
+          </a>
+        </div>
       </div>
     </div>
 
@@ -332,6 +365,16 @@
         <div>
           <span class="font-bold text-slate-800 block mb-0.5">MobiKwik URL:</span>
           <textarea id="mobikwikRaw" readonly rows="2" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700"></textarea>
+        </div>
+
+        <div>
+          <span class="font-bold text-slate-800 block mb-0.5">Navi Chrome Intent URL:</span>
+          <textarea id="naviIntentRaw" readonly rows="2" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700"></textarea>
+        </div>
+
+        <div>
+          <span class="font-bold text-slate-800 block mb-0.5">Navi Standard Package URL:</span>
+          <textarea id="naviPackageRaw" readonly rows="2" class="w-full bg-white border border-slate-200 rounded p-1.5 text-[10px] text-slate-700"></textarea>
         </div>
 
         <div>
@@ -496,7 +539,21 @@
           <span class="text-xs font-semibold text-sky-600 bg-sky-50 px-2 py-1 rounded">Open</span>
         </a>
 
-        <!-- 10. Raw OS Default Intent -->
+        <!-- 10. Navi UPI -->
+        <a id="sheetNaviBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:border-emerald-400 bg-white hover:bg-emerald-50/30 transition-all active:scale-[0.98] no-underline">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#00D09C] flex items-center justify-center text-white font-black text-base shadow-sm shrink-0">
+              N
+            </div>
+            <div class="text-left">
+              <span class="text-xs font-bold text-slate-900 block leading-tight">Navi UPI</span>
+              <span class="text-[10.5px] text-slate-500">package=com.naviapp</span>
+            </div>
+          </div>
+          <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">Open</span>
+        </a>
+
+        <!-- 11. Raw OS Default Intent -->
         <a id="sheetRawUpiBtn" href="#" class="flex items-center justify-between p-3 rounded-xl border border-dashed border-slate-300 hover:border-slate-400 bg-slate-50 hover:bg-slate-100 transition-all active:scale-[0.98] no-underline">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-slate-200 flex items-center justify-center text-slate-700 font-bold text-xs shrink-0">
@@ -687,6 +744,17 @@
       document.getElementById('mobikwikBtn').href = mobikwikUrl;
       document.getElementById('mobikwikRaw').value = mobikwikUrl;
       document.getElementById('sheetMobiKwikBtn').href = mobikwikUrl;
+
+      // Navi UPI (Chrome Intent URI & Standard Package target)
+      const naviBrowserIntent = `intent://pay?pa=${encodeURIComponent(vpa)}&pn=${encodeURIComponent(name)}&am=${amountStr}&tn=${encodeURIComponent(note)}&tr=${encodeURIComponent(note)}&cu=INR#Intent;scheme=upi;package=com.naviapp;end`;
+      const naviUpiWithPackage = `upi://pay?pa=${encodeURIComponent(vpa)}&pn=${encodeURIComponent(name)}&am=${amountStr}&tn=${encodeURIComponent(note)}&tr=${encodeURIComponent(note)}&cu=INR&package=com.naviapp`;
+      const naviTarget = isAndroid ? naviBrowserIntent : naviUpiWithPackage;
+      document.getElementById('naviBtn').href = naviTarget;
+      document.getElementById('sheetNaviBtn').href = naviTarget;
+      document.getElementById('imgNaviIntentBtn').href = naviBrowserIntent;
+      document.getElementById('imgNaviPackageBtn').href = naviUpiWithPackage;
+      document.getElementById('naviIntentRaw').value = naviBrowserIntent;
+      document.getElementById('naviPackageRaw').value = naviUpiWithPackage;
 
       // Old PhonePe (cbsName: name)
       const oldPhonePePayload = {
